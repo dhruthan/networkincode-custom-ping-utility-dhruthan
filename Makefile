@@ -1,12 +1,24 @@
-# Makefile
+# Default values
+TARGET ?= 127.0.0.1
+COUNT ?= 4
+TTL ?= 64
+TIMEOUT ?= 2
 
-.PHONY: run test clean
+# Python executable
+PYTHON = python3
 
-run:
-	python3 src/main.py
+# Paths
+SRC = src/main.py
+TEST_SCRIPT = scripts/test.sh
+
+# Commands
+.PHONY: ping test clean
+
+ping:
+	@sudo $(PYTHON) $(SRC) $(TARGET) -c $(COUNT) -t $(TTL) -W $(TIMEOUT)
 
 test:
-	bash scripts/test.sh
+	@bash $(TEST_SCRIPT)
 
 clean:
-	rm -rf __pycache__
+	@echo "Nothing to clean yet (no compiled files)."

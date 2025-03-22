@@ -1,88 +1,39 @@
 # Custom Ping Utility
 
-## **Objective**
-The goal of this assignment is to develop a custom **ping utility** that replicates the basic functionality of the standard `ping` tool. This tool will allow users to test network reachability and measure round-trip time (RTT) for packets sent to a target IP address.
+A Python-based ping utility that supports both IPv4 and IPv6, allowing users to send ICMP Echo Requests and receive Echo Replies with customizable options such as TTL (hop limit) and timeout.
 
----
+## Features
+- Supports IPv4 and IPv6 addresses.
+- Customizable packet count, TTL/hop limit, and timeout.
+- Detailed debugging output for troubleshooting.
+- Falls back to IPv4 if IPv6 is unavailable (for hostnames).
+- Command-line interface with argparse for easy usage.
 
-## **Problem Statement**
-Your task is to build a **custom ping utility** that performs the following functions:
+## Requirements
+- Python 3.6+ (tested with Python 3.10.12 on Ubuntu 22.04.5 LTS).
+- Root privileges (`sudo`) for raw socket access.
+- IPv6 kernel support enabled (`cat /proc/sys/net/ipv6/conf/all/disable_ipv6` should be `0`).
 
-- **Send ICMP echo requests** to a target IP address.
-- **Receive and process ICMP echo replies** from the target.
-- **Calculate and display round-trip time (RTT)** for each ICMP echo request-reply cycle.
-- **[Bonus] Provide statistics** on:
-  - Packet loss
-  - Minimum RTT
-  - Maximum RTT
-  - Average RTT
-  - Standard deviation of RTT
-- **[Bonus] Provide options** to configure the utility:
-  - Choose the network interface for sending packets.
-  - Set the Time-To-Live (TTL) value.
-  - Support both **IPv4 and IPv6**.
+## Steps to run
 
----
-
-## **Repository Setup**
-1. **Clone the repository:**
+1. **Clone this repo and Navigate to directory**
+      
+2. **Execute the Test file**
    ```sh
-   git clone <repo-link>
-   cd custom-ping-utility
-   ```
-2. **Modify and extend the provided template** according to the requirements.
+   sudo ./scripts/test.sh
+   ``` 
 
----
+## Usage   
 
-## **Implementation Guidelines**
-- Implement socket programming to handle **ICMP (Internet Control Message Protocol) packets**.
-- Ensure compatibility with both **Linux and macOS systems**.
-- Use appropriate **error handling** to deal with network timeouts, unreachable hosts, and permission issues.
-- Structure your code to allow easy extension for bonus features.
+python3 ./src/main.py [-h] [-c COUNT] [-t TTL] [-W TIMEOUT] target
 
----
+positional arguments:
+  target                Target hostname or IP address (IPv4 or IPv6)
 
-## **Documentation Requirements**
-Your submission must include:
-- A **README.md** file with:
-  - Clear **setup and installation instructions**.
-  - **Usage examples** with command-line arguments.
-  - **Required dependencies** and supported versions.
-- **Well-documented code** with meaningful comments.
-- A **script (`scripts/test.sh`)** to test the functionality of your custom ping utility.
-
----
-
-## **Example Repository Structure**
-```
-/ (Root)
-│── README.md          # Detailed assignment instructions
-│── Makefile           # Build and run commands (if applicable)
-│── src/
-│   │── main.py        # Main Python script for the ping utility
-│   │── icmp_handler.py # ICMP packet handling logic
-│── scripts/
-│   │── test.sh        # Script to test the program
-```
-
----
-
-## **Resources**
-- [What are Ping and Traceroute Really?](https://blog.apnic.net/2021/06/21/what-are-ping-and-traceroute-really/)
-- [Socket Programming Guide](https://www.cs.rpi.edu/~moorthy/Courses/os98/Pgms/socket.html)
-- [Understanding ICMP and Ping](https://avocado89.medium.com/ping-icmp-32e9eba81623)
-- **Socket Programming in Python** (for implementation reference)
-
----
-
-## **Submission Instructions**
-1. Complete your implementation and ensure it meets the assignment requirements.
-2. Update the `README.md` with detailed instructions on how to build and run your solution.
-3. **Make a pull request (PR)** to submit your final code.
-4. Your PR should include:
-   - A description of your implementation.
-   - Any limitations or known issues.
-   - Example test cases demonstrating the tool's functionality.
-
-**Happy coding! 🚀**
-
+  options:
+  -h, --help            show this help message and exit
+  -c COUNT, --count COUNT
+                        Number of pings (default: 4)
+  -t TTL, --ttl TTL     Time to live/hop limit (default: 64)
+  -W TIMEOUT, --timeout TIMEOUT
+                        Timeout in seconds (default: 2)
